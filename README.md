@@ -1,4 +1,4 @@
-# Loy_Note_Taker
+# Loya_Note_Taker
 
 [![License](https://img.shields.io/badge/license-GPL%20v%203.0-green)](https://choosealicense.com/licenses/gpl-3.0/)
 
