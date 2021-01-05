@@ -1,10 +1,9 @@
-
 var notes = require("../db/db.json")
-var fs = require("fs"); 
+var fs = require("fs");
 
 
 
-module.exports = function(app) {
+module.exports = function (app) {
     app.get("/api/notes",
         function (req, res) {
             fs.readFile("./db/db.json", function (err, data) {
@@ -13,8 +12,9 @@ module.exports = function(app) {
                 console.log(note);
                 return res.json(note);
             });
+        }),
 
-            app.post("/api/notes",
+        app.post("/api/notes",
             function (req, res) {
                 fs.writeFile("./db/db.json", function (err, data) {
                     if (err) throw err;
@@ -22,8 +22,9 @@ module.exports = function(app) {
                     console.log(note);
                     return res.json(note);
                 });
+            })
 
-                 app.delete("/api/notes",
+            app.delete("/api/notes",
                 function (req, res) {
                     fs.deleteFile("./db/db.json", function (err, data) {
                         if (err) throw err;
@@ -32,5 +33,5 @@ module.exports = function(app) {
                         return res.json(note);
                     });
 
-    });
-});
+                });
+            }
