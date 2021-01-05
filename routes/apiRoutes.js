@@ -12,9 +12,25 @@ module.exports = function(app) {
                 let note = JSON.parse(data);
                 console.log(note);
                 return res.json(note);
-
-
             });
 
-    })
-}
+            app.post("/api/notes",
+            function (req, res) {
+                fs.writeFile("./db/db.json", function (err, data) {
+                    if (err) throw err;
+                    let note = JSON.parse(data);
+                    console.log(note);
+                    return res.json(note);
+                });
+
+                 app.delete("/api/notes",
+                function (req, res) {
+                    fs.deleteFile("./db/db.json", function (err, data) {
+                        if (err) throw err;
+                        let note = JSON.parse(data);
+                        console.log(note);
+                        return res.json(note);
+                    });
+
+    });
+});
