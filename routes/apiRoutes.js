@@ -1,37 +1,26 @@
-var notes = require("../db/db.json")
-var fs = require("fs");
+const router = require("express").Router();
+const notes = require("../db/db.json")
 
 
+router.get("./api/", (req, res) => {
+    store.getNotes().then((notes) => res.json(notes));
+});
 
-module.exports = function (app) {
-    app.get("/api/notes",
-        function (req, res) {
-            fs.readFile("./db/db.json", function (err, data) {
-                if (err) throw err;
-                let note = JSON.parse(data);
-                console.log(note);
-                return res.json(note);
-            });
-        }),
+router.post("/api/", (req, res) => {
+    // create takes an argument of an object describing the item we want to
+    // insert into our table. In this case we just we pass in an object with a text
+    // and complete property (req.body)
+    router.db.create({
+      title: req.body.title,
+      text: req.body.text
 
-        app.post("/api/notes",
-            function (req, res) {
-                fs.writeFile("./db/db.json", function (err, data) {
-                    if (err) throw err;
-                    let note = JSON.parse(data);
-                    console.log(note);
-                    return res.json(note);
-                });
-            })
-
-            app.delete("/api/notes",
-                function (req, res) {
-                    fs.deleteFile("./db/db.json", function (err, data) {
-                        if (err) throw err;
-                        let note = JSON.parse(data);
-                        console.log(note);
-                        return res.json(note);
-                    });
-
-                });
-            }
+    }).then(function(notes) {
+      // We have access to the new todo as an argument inside of the callback function
+      res.json(notes);
+    })
+      .catch(function(err) {
+      // Whenever a validation or flag fails, an error is thrown
+      // We can "catch" the error to prevent it from being "thrown", which could crash our node router
+        res.json(err);
+      });
+  });
